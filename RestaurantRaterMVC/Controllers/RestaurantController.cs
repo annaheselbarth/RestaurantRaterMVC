@@ -1,6 +1,7 @@
 ﻿using RestaurantRaterMVC.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -84,6 +85,22 @@ namespace RestaurantRaterMVC.Controllers
             if (restaurant == null)
             {
                 return HttpNotFound();
+            }
+            return View(restaurant);
+        }
+
+        // POST: Restaurant/Edit/{id}
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+
+        public ActionResult Edit(Restaurant restaurant)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Entry(restaurant).State = EntityState.Modified;
+                _db.SaveChanges();
+                return RedirectToAction("Index");
             }
             return View(restaurant);
         }
