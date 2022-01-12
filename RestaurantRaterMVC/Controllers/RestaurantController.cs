@@ -69,5 +69,23 @@ namespace RestaurantRaterMVC.Controllers
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        //GET: Restaurant/Edit/{id}
+
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            }
+
+            Restaurant restaurant = _db.Restaurants.Find(id);
+            if (restaurant == null)
+            {
+                return HttpNotFound();
+            }
+            return View(restaurant);
+        }
     }
 }
